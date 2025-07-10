@@ -37,9 +37,15 @@ services:
       - api
     networks:
       - internal
+      - nautilus-net
     environment:
       API_SERVER_ENDPOINT: http://api:5000/
-      VIRTUAL_HOST: tulip.h4xx.eu
+      VIRTUAL_HOST: tulip.burek.si
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tiger.rule=Host(`tiger.burek.si`)"
+      - "traefik.http.services.tiger.loadbalancer.server.port=3000"
+
 
   api:
     build:
@@ -137,3 +143,5 @@ volumes:
 
 networks:
   internal:
+  nautilus-net:
+    external: true
